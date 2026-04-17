@@ -8,12 +8,15 @@ class CertBuddy:
         self.deployer = Qiniu()
 
         self.joblist = self.get_joblist()
+        print(self.joblist)
 
     @staticmethod
     def get_joblist():
         with open('.joblist') as f:
             job_data = f.read()
-        return job_data.strip().split('\n')
+        joblist = job_data.strip().split('\n')
+        joblist = list(filter(lambda x: '%' not in x, joblist))
+        return joblist
 
     def run(self):
         for domain in self.joblist:
